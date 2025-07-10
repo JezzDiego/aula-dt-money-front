@@ -121,14 +121,12 @@ export default function Home() {
   };
 
   const handleDeleteTransaction = (id: string) => {
-    if (window.confirm("Tem certeza que deseja excluir esta transação?")) {
-      deleteTransaction(id);
-      // Resetar paginação quando uma transação é excluída
-      setSkip(0);
-      setAllTransactions([]);
-      setHasMore(true);
-      refetchTransactions();
-    }
+    deleteTransaction(id);
+    // Resetar paginação quando uma transação é excluída
+    setSkip(0);
+    setAllTransactions([]);
+    setHasMore(true);
+    refetchTransactions();
   };
 
   if (isLoading && skip === 0)
@@ -144,10 +142,11 @@ export default function Home() {
       <Header openModal={openModal} />
       <BodyContainer>
         <CardContainer totals={aggregated} />
-        <TransactionsLoaded
-          allTransactions={allTransactions}
-          aggregated={aggregated}
-        />
+        <div className="mt-12 -mb-12 sticky top-10">
+          <span className="bg-white shadow-lg border border-gray-300 rounded-lg p-2">
+            {allTransactions.length}/{aggregated.totalTransactions} transações
+          </span>
+        </div>
         <Table
           data={allTransactions}
           onEdit={handleEditTransaction}
@@ -191,22 +190,3 @@ export default function Home() {
     </div>
   );
 }
-const TransactionsLoaded = ({
-  allTransactions,
-  aggregated,
-}: {
-  allTransactions: ITransaction[];
-  aggregated: {
-    totalIncome: number;
-    totalOutcome: number;
-    totalTransactions: number;
-  };
-}) => {
-  return (
-    <div className="mt-12 -mb-12 sticky top-10">
-      <span className="bg-white shadow-lg border border-gray-300 rounded-lg p-2">
-        {allTransactions.length}/{aggregated.totalTransactions} transações
-      </span>
-    </div>
-  );
-};

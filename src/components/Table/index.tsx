@@ -1,5 +1,6 @@
-import { ITotal, ITransaction } from "@/types/transaction";
+import { ITransaction } from "@/types/transaction";
 import { formatCurrency, formatDate } from "@/utils";
+import ConfirmationModal from "../ConfirmationModal";
 
 export interface ITableProps {
   data: ITransaction[];
@@ -54,20 +55,28 @@ export function Table({ data, onEdit, onDelete }: ITableProps) {
                   {onEdit && (
                     <button
                       onClick={() => onEdit(transaction)}
-                      className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition-colors"
+                      className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition-colors cursor-pointer"
                       title="Editar transação"
                     >
                       Editar
                     </button>
                   )}
                   {onDelete && transaction.id && (
-                    <button
-                      onClick={() => onDelete(transaction.id!)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors"
+                    <ConfirmationModal
                       title="Excluir transação"
+                      description="Tem certeza que deseja excluir esta transação?"
+                      onConfirm={() => onDelete(transaction.id!)}
+                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors cursor-pointer"
                     >
                       Excluir
-                    </button>
+                    </ConfirmationModal>
+                    // <button
+                    //   onClick={() => onDelete(transaction.id!)}
+                    //   className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors"
+                    //   title="Excluir transação"
+                    // >
+                    //   Excluir
+                    // </button>
                   )}
                 </div>
               </td>
