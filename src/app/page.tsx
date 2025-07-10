@@ -142,11 +142,13 @@ export default function Home() {
       <Header openModal={openModal} />
       <BodyContainer>
         <CardContainer totals={aggregated} />
-        <div className="mt-12 -mb-12 sticky top-10">
-          <span className="bg-white shadow-lg border border-gray-300 rounded-lg p-2">
-            {allTransactions.length}/{aggregated.totalTransactions} transações
-          </span>
-        </div>
+        {aggregated && allTransactions && (
+          <div className="mt-12 -mb-12 sticky top-10">
+            <span className="bg-white shadow-lg border border-gray-300 rounded-lg p-2">
+              {allTransactions.length}/{aggregated.totalTransactions} transações
+            </span>
+          </div>
+        )}
         <Table
           data={allTransactions}
           onEdit={handleEditTransaction}

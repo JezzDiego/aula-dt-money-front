@@ -9,7 +9,7 @@ export interface ICardContainerProps {
 }
 
 export function CardContainer({ totals }: ICardContainerProps) {
-  const { totalIncome, totalOutcome, totalTransactions } = totals;
+  const { totalIncome, totalOutcome } = totals || {};
 
   return (
     <div className="flex justify-between">
